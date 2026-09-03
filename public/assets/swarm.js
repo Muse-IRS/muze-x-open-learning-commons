@@ -8,6 +8,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isIPad = /iPad/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const anchorElement = document.querySelector('[data-swarm-anchor]');
 
   const DENSITY_BOOST = 1.5;
   const DEFAULT_SPEED = reducedMotion ? 0.65 : (isIPad ? 1.4 : 1.0);
@@ -19,6 +20,7 @@
     mode: 'attract',
     speed: DEFAULT_SPEED,
     pointer: { x: 0, y: 0, active: false, pressure: 0 },
+    anchor: { element: anchorElement, active: false, x: 0, y: 0, radius: 0, strength: 0 },
     particles: [],
     last: performance.now(),
     pulse: 0
@@ -154,11 +156,51 @@
     setSpeed
   };
 
+  function updateAnchor() {
+    const anchor = state.anchor;
+    const element = anchor.element;
+    if (!element) {
+      anchor.active = false;
+      anchor.strength = 0;
+      return;
+    }
+
+    const rect = element.getBoundingClientRect();
+    const visibleWidth = Math.max(0, Math.min(rect.right, state.width) - Math.max(rect.left, 0));
+    const visibleHeight = Math.max(0, Math.min(rect.bottom, state.height) - Math.max(rect.top, 0));
+    const visibleArea = visibleWidth * visibleHeight;
+    const totalArea = Math.max(1, rect.width * rect.height);
+    const visibility = clamp(visibleArea / totalArea, 0, 1);
+    const rawStrength = clamp((visibility - .04) / .56, 0, 1);
+
+    anchor.x = rect.left + rect.width * .5;
+    anchor.y = rect.top + rect.height * .5;
+    anchor.radius = Math.max(72, Math.min(rect.width, rect.height) * .47);
+    anchor.strength = rawStrength * (reducedMotion ? .35 : 1);
+    anchor.active = anchor.strength > .01;
+    element.classList.toggle('is-field-active', anchor.strength > .18);
+  }
+
   function updateParticle(p, dt, time) {
-    const centerX = state.width * (.5 + (p.team === 0 ? -.055 : .055));
-    const centerY = state.height * .52;
-    let fx = (centerX - p.x) * .000085;
-    let fy = (centerY - p.y) * .000085;
+    const anchor = state.anchor;
+    const baseCenterX = state.width * (.5 + (p.team === 0 ? -.055 : .055));
+    const baseCenterY = state.height * .52;
+    let centerX = baseCenterX;
+    let centerY = baseCenterY;
+    let spring = .000085;
+
+    if (anchor.active) {
+      const blend = anchor.strength;
+      const teamOffset = (p.team === 0 ? -.12 : .12) * anchor.radius;
+      const anchorTargetX = anchor.x + teamOffset;
+      const anchorTargetY = anchor.y + anchor.radius * .15;
+      centerX = baseCenterX * (1 - blend) + anchorTargetX * blend;
+      centerY = baseCenterY * (1 - blend) + anchorTargetY * blend;
+      spring += .00034 * blend;
+    }
+
+    let fx = (centerX - p.x) * spring;
+    let fy = (centerY - p.y) * spring;
 
     const orbit = .0065 * p.drift;
     fx += Math.cos(time * .00022 * p.drift + p.phase) * orbit;
@@ -170,6 +212,25 @@
     const teamSpin = p.team === 0 ? 1 : -1;
     fx += (-midDy / midD) * .0018 * teamSpin;
     fy += (midDx / midD) * .0018 * teamSpin;
+
+    if (anchor.active) {
+      const dx = anchor.x - p.x;
+      const dy = anchor.y - p.y;
+      const d = Math.hypot(dx, dy) + .01;
+      const nx = dx / d;
+      const ny = dy / d;
+      const boundary = anchor.radius * .78;
+      const outside = clamp((d - boundary) / Math.max(anchor.radius * 1.8, 1), 0, 1);
+      const gather = (.014 + outside * .052) * anchor.strength * (.62 + p.z * .58);
+      fx += nx * gather;
+      fy += ny * gather;
+
+      if (d < anchor.radius * 1.08) {
+        const localSpin = .0062 * anchor.strength * teamSpin;
+        fx += -ny * localSpin;
+        fy += nx * localSpin;
+      }
+    }
 
     if (state.pointer.active && state.mode !== 'relax') {
       const dx = state.pointer.x - p.x;
@@ -215,7 +276,7 @@
     p.y += p.vy * travelDt;
     p.z += p.vz * travelDt;
 
-    const damping = Math.pow(.972, dt);
+    const damping = Math.pow(anchor.active ? .965 : .972, dt);
     p.vx *= damping;
     p.vy *= damping;
     p.vz *= Math.pow(.94, dt);
@@ -269,6 +330,8 @@
     const elapsed = Math.min(34, now - state.last);
     state.last = now;
     const dt = reducedMotion ? .35 : clamp(elapsed / 16.667, .4, 2.05);
+
+    updateAnchor();
 
     ctx.shadowBlur = 0;
     ctx.globalCompositeOperation = 'source-over';
