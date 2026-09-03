@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Muze-X Swarm Field Lab — interface dédiée au champ réactif expérimental.">
+  <meta name="theme-color" content="#040a16">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'">
+  <title>Muze-X · Swarm Field Lab</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/swarm-lab.css">
+</head>
+<body class="swarm-lab-page">
+  <canvas id="swarm-field" aria-hidden="true"></canvas>
+  <div class="field-vignette" aria-hidden="true"></div>
+
+  <header class="topbar lab-topbar">
+    <a class="brand" href="../" aria-label="Retour à Open Learning Commons">
+      <img src="../assets/brand-logo.svg" alt="Muze-X">
+      <span>Swarm Field Lab</span>
+    </a>
+    <nav class="topnav" aria-label="Navigation">
+      <a href="../">Open Learning ↩</a>
+      <a href="https://muse-irs.github.io/muze-x-lab-collaborative-platform/">Muze-X Lab ↗</a>
+    </nav>
+  </header>
+
+  <main class="field-lab-shell">
+    <section class="field-lab-panel glass-panel" aria-labelledby="field-lab-title">
+      <p class="eyebrow">Logique d’interface conceptuelle Muze-X</p>
+      <h1 id="field-lab-title">Champ<br><span>réactif.</span></h1>
+      <p class="field-lab-copy">Espace dédié à l’expérimentation visuelle de l’essaim. Touchez l’écran ou déplacez le pointeur : l’interaction modifie le champ local, jamais le contenu pédagogique.</p>
+
+      <div class="field-controller field-controller-lab" aria-label="Commandes du champ réactif">
+        <span class="controller-label">Mode</span>
+        <div class="mode-buttons" role="group" aria-label="Mode du champ visuel">
+          <button type="button" data-field-mode="attract" aria-pressed="true">Attracteur</button>
+          <button type="button" data-field-mode="disperse" aria-pressed="false">Dispersion</button>
+          <button type="button" data-field-mode="vortex" aria-pressed="false">Vortex</button>
+          <button type="button" data-field-mode="relax" aria-pressed="false">Calme</button>
+        </div>
+
+        <span class="controller-label speed-label">Vitesse · <strong id="field-speed-value" aria-live="polite">1×</strong></span>
+        <div class="mode-buttons" role="group" aria-label="Vitesse du champ visuel">
+          <button type="button" data-field-speed="0.75" aria-pressed="false" aria-label="Vitesse 0,75 fois">0,75×</button>
+          <button type="button" data-field-speed="1" aria-pressed="false" aria-label="Vitesse normale">1×</button>
+          <button type="button" data-field-speed="1.4" aria-pressed="false" aria-label="Vitesse 1,4 fois">1,4×</button>
+          <button type="button" data-field-speed="1.8" aria-pressed="false" aria-label="Vitesse 1,8 fois">1,8×</button>
+          <button type="button" data-field-speed="2.2" aria-pressed="false" aria-label="Vitesse 2,2 fois">2,2×</button>
+        </div>
+      </div>
+
+      <div class="field-lab-locks">
+        <code>VISUAL_FIELD != LEARNING_ENGINE</code>
+        <code>TOUCH / POINTER → LOCAL_VISUAL_RESPONSE</code>
+        <code>PERCEIVED_DEPTH != GEOMETRIC_3D</code>
+      </div>
+    </section>
+
+    <aside class="field-lab-note glass-panel">
+      <strong>Technique actuelle</strong>
+      <span>Canvas 2D · deux essaims cyan/violet · variable de profondeur latente · taille / halo / alpha / mouvement différentiel.</span>
+      <strong>Statut</strong>
+      <span>R&D exploratoire — métaphore visuelle ≠ modèle scientifique.</span>
+    </aside>
+  </main>
+
+  <script src="../assets/swarm.js"></script>
+</body>
+</html>
