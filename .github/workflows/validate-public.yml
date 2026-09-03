@@ -34,6 +34,7 @@ jobs:
           test -f data/starter-mesh.json
           test -f public/index.html
           test -f public/assets/styles.css
+          test -f public/assets/anchor.css
           test -f public/assets/swarm.js
           test -f public/assets/app.js
           test -f public/assets/brand-logo.svg
@@ -59,20 +60,26 @@ jobs:
           node --check public/assets/swarm.js
           node --check public/assets/app.js
 
-      - name: Preserve immersive Muze-X portal bridge
+      - name: Preserve immersive Muze-X portal bridge and bottom anchor
         shell: bash
         run: |
           set -euo pipefail
-          grep -q 'class="orb-link"' public/index.html
+          grep -q 'data-swarm-anchor' public/index.html
+          grep -q 'class="orb-link swarm-anchor"' public/index.html
+          grep -q 'interface-technique' public/index.html
+          grep -q 'anchor.css' public/index.html
           grep -q 'https://muse-irs.github.io/muze-x-lab-collaborative-platform/' public/index.html
+          grep -q 'updateAnchor' public/assets/swarm.js
           grep -q 'PORTAL_ATTRACTOR' docs/MUZE_X_LAB_BRIDGE.md
 
-      - name: Preserve conceptual interface footer signature
+      - name: Preserve conceptual interface qualification
         shell: bash
         run: |
           set -euo pipefail
           grep -q 'Logique d’interface conceptuelle Muze-X' public/index.html
           grep -q 'métaphore visuelle ≠ modèle scientifique' public/index.html
+          grep -q 'Technique actuelle' public/index.html
+          grep -q 'profondeur perceptive émergente' public/index.html
 
       - name: Enforce public boundary
         shell: bash
