@@ -98,17 +98,18 @@ jobs:
           grep -q 'data-field-speed="2.2"' public/swarm/index.html
           grep -q 'Swarm Field Lab' public/swarm/index.html
 
-      - name: Preserve usable compact Swarm Field Lab controls
+      - name: Preserve side drawer and swarm anchor in Swarm Field Lab
         shell: bash
         run: |
           set -euo pipefail
-          grep -q 'id="swarm-controls"' public/swarm/index.html
-          grep -q 'id="swarm-controls-hide"' public/swarm/index.html
-          grep -q 'id="swarm-controls-restore"' public/swarm/index.html
-          grep -q 'swarm-lab.js' public/swarm/index.html
-          grep -q 'max-height:min(36svh,330px)' public/assets/swarm-lab.css
-          grep -q 'controls-hidden' public/assets/swarm-lab.css
-          grep -q 'setHidden' public/assets/swarm-lab.js
+          grep -q 'id="swarm-controls-open"' public/swarm/index.html
+          grep -q 'id="swarm-controls-close"' public/swarm/index.html
+          grep -q 'class="lab-drawer glass-panel"' public/swarm/index.html
+          grep -q 'data-swarm-anchor' public/swarm/index.html
+          grep -q 'lab-swarm-anchor' public/swarm/index.html
+          grep -q 'transform:translateX(calc(100% + 36px))' public/assets/swarm-lab.css
+          grep -q 'drawer-open .lab-drawer' public/assets/swarm-lab.css
+          grep -q 'setOpen' public/assets/swarm-lab.js
 
       - name: Preserve immersive Muze-X portal bridge and bottom anchor
         shell: bash
