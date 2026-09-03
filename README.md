@@ -18,6 +18,44 @@ SYNTHESIZE
 GENERATE
 ```
 
+## Current public surfaces
+
+```text
+OPEN LEARNING
+→ aggregate public learning resources
+→ search / provenance / concepts / domains
+
+SWARM FIELD LAB
+→ dedicated reactive visual-field experimentation
+→ attract / disperse / vortex / relax
+→ visual speed control
+```
+
+The main learning interface keeps the full-screen swarm as Muze-X visual language, but its technical controls live on the dedicated `/swarm/` route so visual experimentation does not compete with the learning task.
+
+## Learning field
+
+The public learning field combines existing Muze-X modules with a small versioned catalog of external public educational resources.
+
+```text
+PUBLIC RESOURCE
+→ PROVENANCE
+→ METADATA
+→ LEARNING FIELD
+→ ORIGINAL SOURCE
+```
+
+The starter external catalog currently demonstrates several resource types: course catalogs, open courseware, scholarly reference works and self-learning resources.
+
+```text
+INDEXED_RESOURCE != ENDORSED_CLAIM
+PUBLICLY_ACCESSIBLE != FREE_TO_COPY
+```
+
+Open Learning stores discovery metadata and links back to the original publisher. It does not silently reproduce third-party educational content.
+
+See `docs/CONTENT_AGGREGATION_MODEL.md`.
+
 ## Core loop
 
 ```text
@@ -104,18 +142,20 @@ VISUAL_BEHAVIOR
 → imposed content
 ```
 
+The dedicated `Swarm Field Lab` exposes the visual controls. The main learning surface keeps only the ambient field and the explicit bottom navigation anchor.
+
 ## Canonical persistence
 
 GitHub `main` is the public persistent authority for the current project state. Humans and AI systems may collaborate through issues, pull requests and versioned files. No single conversation or model is the canonical memory of the project.
 
 The repository should remain understandable and continuable even if its current collaborators, tools or models change.
 
-## Planned public architecture
+## Public architecture
 
 ```text
 PUBLIC EDUCATIONAL SOURCES
         ↓
-SOURCE REGISTRY
+SOURCE REGISTRY / CATALOG
         ↓
 PROVENANCE
         ↓
@@ -128,7 +168,7 @@ USER-CHOSEN LEARNING PATH
 ORIGINAL SOURCE / DOMAIN MODULE
 ```
 
-The first deployment intentionally requires no user account, no YouTube account, no OAuth token and no committed API secret.
+The current deployment intentionally requires no user account, no YouTube account, no OAuth token and no committed API secret.
 
 ## Privacy and public boundary
 
@@ -151,4 +191,4 @@ This credit documents a creative and conceptual contribution. It does not by its
 
 ## License
 
-Apache License 2.0. See `LICENSE` and `NOTICE` once the bootstrap commit set is complete.
+Apache License 2.0. See `LICENSE` and `NOTICE`.
