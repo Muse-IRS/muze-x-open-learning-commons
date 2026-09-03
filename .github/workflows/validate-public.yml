@@ -28,13 +28,19 @@ jobs:
           test -f docs/CONCEPT_GRAPH_MODEL.md
           test -f docs/MUZE_X_LAB_BRIDGE.md
           test -f docs/VISUAL_FIELD_MODEL.md
+          test -f docs/CONTENT_AGGREGATION_MODEL.md
           test -f schemas/resource.schema.json
           test -f schemas/concept.schema.json
           test -f schemas/relation.schema.json
+          test -f schemas/learning-source.schema.json
           test -f data/starter-mesh.json
+          test -f data/learning-catalog.json
           test -f public/index.html
+          test -f public/swarm/index.html
           test -f public/assets/styles.css
+          test -f public/assets/learning.css
           test -f public/assets/anchor.css
+          test -f public/assets/swarm-lab.css
           test -f public/assets/swarm.js
           test -f public/assets/app.js
           test -f public/assets/brand-logo.svg
@@ -45,12 +51,20 @@ jobs:
           python -m json.tool schemas/resource.schema.json >/dev/null
           python -m json.tool schemas/concept.schema.json >/dev/null
           python -m json.tool schemas/relation.schema.json >/dev/null
+          python -m json.tool schemas/learning-source.schema.json >/dev/null
           python -m json.tool data/starter-mesh.json >/dev/null
+          python -m json.tool data/learning-catalog.json >/dev/null
           python - <<'PY'
           import json
           from pathlib import Path
-          data = json.loads(Path('data/starter-mesh.json').read_text())
-          bad = [r.get('canonical_url') for r in data.get('resources', []) if not str(r.get('canonical_url', '')).startswith('https://')]
+          files = ['data/starter-mesh.json', 'data/learning-catalog.json']
+          bad = []
+          for filename in files:
+              data = json.loads(Path(filename).read_text())
+              for resource in data.get('resources', []):
+                  url = str(resource.get('canonical_url', ''))
+                  if not url.startswith('https://'):
+                      bad.append((filename, resource.get('id'), url))
           if bad:
               raise SystemExit(f'Non-HTTPS public resource URL(s): {bad}')
           PY
@@ -59,6 +73,28 @@ jobs:
         run: |
           node --check public/assets/swarm.js
           node --check public/assets/app.js
+
+      - name: Preserve learning aggregator
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'id="learning-field"' public/index.html
+          grep -q 'id="learning-grid"' public/index.html
+          grep -q 'learning-catalog.json' public/assets/app.js
+          grep -q 'INDEXED_RESOURCE' docs/CONTENT_AGGREGATION_MODEL.md
+          grep -q 'REUSE' docs/CONTENT_AGGREGATION_MODEL.md
+
+      - name: Keep swarm controls out of learning interface
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -q 'data-field-mode=' public/index.html; then
+            echo 'Swarm mode controls belong to the dedicated Swarm Field Lab, not the learning interface.' >&2
+            exit 1
+          fi
+          grep -q 'data-field-mode="attract"' public/swarm/index.html
+          grep -q 'data-field-speed="2.2"' public/swarm/index.html
+          grep -q 'Swarm Field Lab' public/swarm/index.html
 
       - name: Preserve immersive Muze-X portal bridge and bottom anchor
         shell: bash
