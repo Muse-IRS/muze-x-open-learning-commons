@@ -1,0 +1,64 @@
+{
+  "version": "0.1.0",
+  "status": "EXPLORATORY",
+  "verified_on": "2026-09-03",
+  "scope": "Public learning-resource index. Presence in this catalog is not an endorsement or validation of every statement in the linked source.",
+  "resources": [
+    {
+      "id": "fun-mooc-catalog",
+      "kind": "course-catalog",
+      "title": "FUN MOOC — catalogue de cours",
+      "creator": "France Université Numérique",
+      "canonical_url": "https://www.fun-mooc.fr/fr/cours/",
+      "language": "fr",
+      "topics": ["numérique", "sciences", "environnement", "droit", "économie", "formation"],
+      "description": "Catalogue public de cours en ligne porté par France Université Numérique, avec recherche par sujet, langue, disponibilité et type de cours.",
+      "access_note": "Les modalités d’inscription, de disponibilité, de certification et de tarification dépendent de chaque cours.",
+      "rights_note": "Open Learning indexe les métadonnées et renvoie à la source originale ; aucun contenu de cours n’est recopié ici.",
+      "provenance": "Site officiel FUN MOOC",
+      "epistemic": {"source_existence": "OBS", "pedagogical_relevance": "REL"}
+    },
+    {
+      "id": "mit-ocw",
+      "kind": "open-courseware",
+      "title": "MIT OpenCourseWare",
+      "creator": "Massachusetts Institute of Technology",
+      "canonical_url": "https://ocw.mit.edu/",
+      "language": "en",
+      "topics": ["mathématiques", "informatique", "ingénierie", "sciences", "humanités", "énergie"],
+      "description": "Publication ouverte de matériels issus de milliers de cours du MIT, du niveau introductif au niveau avancé.",
+      "access_note": "Navigation libre et apprentissage à son rythme ; le site indique qu’aucune inscription n’est requise pour parcourir OCW.",
+      "rights_note": "Les contenus restent hébergés et régis par les conditions et licences du MIT OpenCourseWare.",
+      "provenance": "Site officiel MIT OpenCourseWare",
+      "epistemic": {"source_existence": "OBS", "pedagogical_relevance": "REL"}
+    },
+    {
+      "id": "stanford-encyclopedia-philosophy",
+      "kind": "reference-work",
+      "title": "Stanford Encyclopedia of Philosophy",
+      "creator": "Metaphysics Research Lab, Stanford University",
+      "canonical_url": "https://plato.stanford.edu/",
+      "language": "en",
+      "topics": ["philosophie", "épistémologie", "logique", "éthique", "sciences cognitives"],
+      "description": "Ouvrage de référence éditorialisé en philosophie et disciplines connexes, maintenu par des chercheurs et contributeurs académiques.",
+      "access_note": "Consultation publique du site ; certaines fonctionnalités ou formats peuvent relever de conditions distinctes.",
+      "rights_note": "Le contenu de SEP est protégé par copyright ; Open Learning ne fait qu’indexer la ressource et pointer vers l’original.",
+      "provenance": "Site officiel Stanford Encyclopedia of Philosophy",
+      "epistemic": {"source_existence": "OBS", "pedagogical_relevance": "REL"}
+    },
+    {
+      "id": "hal-formation",
+      "kind": "self-learning-catalog",
+      "title": "HAL Formation — ressources et autoformations",
+      "creator": "Centre pour la Communication Scientifique Directe (CCSD)",
+      "canonical_url": "https://learning.hal.science/course/",
+      "language": "fr",
+      "topics": ["science ouverte", "publication scientifique", "archives ouvertes", "licences", "recherche"],
+      "description": "Catalogue de ressources de formation autour de HAL, du libre accès, du dépôt et de la gestion de contenus scientifiques.",
+      "access_note": "Le catalogue expose notamment des autoformations et ressources en accès libre ; certaines activités synchrones suivent leurs propres modalités.",
+      "rights_note": "Les contenus restent sur HAL Formation ; Open Learning conserve seulement les métadonnées nécessaires à l’orientation.",
+      "provenance": "Site officiel HAL Formation / CCSD",
+      "epistemic": {"source_existence": "OBS", "pedagogical_relevance": "REL"}
+    }
+  ]
+}
