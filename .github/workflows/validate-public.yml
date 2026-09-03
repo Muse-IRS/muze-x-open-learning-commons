@@ -93,7 +93,8 @@ jobs:
             exit 1
           fi
           grep -q 'data-field-mode="attract"' public/swarm/index.html
-          grep -q 'data-field-speed="2.2"' public/swarm/index.html
+          grep -q 'data-field-speed="4.4"' public/swarm/index.html
+          grep -q 'clamp(parsed, .65, 4.4)' public/assets/swarm.js
           grep -q 'Swarm Field Lab' public/swarm/index.html
 
       - name: Preserve header controls footer note and ring anchor
