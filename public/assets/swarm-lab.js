@@ -1,28 +1,30 @@
 (() => {
   'use strict';
 
-  const panel = document.getElementById('swarm-controls');
-  const hideButton = document.getElementById('swarm-controls-hide');
-  const restoreButton = document.getElementById('swarm-controls-restore');
+  const drawer = document.getElementById('swarm-controls');
+  const openButton = document.getElementById('swarm-controls-open');
+  const closeButton = document.getElementById('swarm-controls-close');
 
-  if (!panel || !hideButton || !restoreButton) return;
+  if (!drawer || !openButton || !closeButton) return;
 
-  function setHidden(hidden) {
-    document.body.classList.toggle('controls-hidden', hidden);
-    panel.setAttribute('aria-hidden', hidden ? 'true' : 'false');
-    hideButton.setAttribute('aria-expanded', hidden ? 'false' : 'true');
-    restoreButton.hidden = !hidden;
-    if (!hidden) {
-      requestAnimationFrame(() => hideButton.focus({ preventScroll: true }));
+  function setOpen(open) {
+    document.body.classList.toggle('drawer-open', open);
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    openButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+    if (open) {
+      requestAnimationFrame(() => closeButton.focus({ preventScroll: true }));
+    } else {
+      requestAnimationFrame(() => openButton.focus({ preventScroll: true }));
     }
   }
 
-  hideButton.addEventListener('click', () => setHidden(true));
-  restoreButton.addEventListener('click', () => setHidden(false));
+  openButton.addEventListener('click', () => setOpen(true));
+  closeButton.addEventListener('click', () => setOpen(false));
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !document.body.classList.contains('controls-hidden')) {
-      setHidden(true);
+    if (event.key === 'Escape' && document.body.classList.contains('drawer-open')) {
+      setOpen(false);
     }
   });
 })();
