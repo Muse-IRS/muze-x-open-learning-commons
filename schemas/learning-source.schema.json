@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://muse-irs.github.io/muze-x-open-learning-commons/schemas/learning-source.schema.json",
+  "title": "Muze-X Open Learning source",
+  "type": "object",
+  "required": ["id", "kind", "title", "creator", "canonical_url", "language", "topics", "description", "access_note", "rights_note", "provenance", "epistemic"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "kind": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "creator": {"type": "string", "minLength": 1},
+    "canonical_url": {"type": "string", "pattern": "^https://"},
+    "language": {"type": "string", "minLength": 2},
+    "topics": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "description": {"type": "string", "minLength": 1},
+    "access_note": {"type": "string", "minLength": 1},
+    "rights_note": {"type": "string", "minLength": 1},
+    "provenance": {"type": "string", "minLength": 1},
+    "epistemic": {
+      "type": "object",
+      "required": ["source_existence", "pedagogical_relevance"],
+      "properties": {
+        "source_existence": {"enum": ["OBS", "REL", "HYP", "PRED", "SAT", "UNKNOWN", "REFUTED", "N.A."]},
+        "pedagogical_relevance": {"enum": ["OBS", "REL", "HYP", "PRED", "SAT", "UNKNOWN", "REFUTED", "N.A."]}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
