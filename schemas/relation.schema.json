@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knowledge Mesh Relation",
+  "type": "object",
+  "required": ["from", "to", "type", "status", "provenance"],
+  "properties": {
+    "from": {"type": "string", "minLength": 1},
+    "to": {"type": "string", "minLength": 1},
+    "type": {"type": "string", "enum": ["introduces", "explains", "relates_to", "contrasts_with", "depends_on", "applies_to", "opens_domain", "learn_from"]},
+    "status": {"type": "string", "enum": ["OBS", "REL", "HYP", "UNKNOWN", "REFUTED", "N.A."]},
+    "provenance": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

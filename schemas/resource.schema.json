@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://muse-irs.github.io/muze-x-open-learning-commons/schemas/resource.schema.json",
+  "title": "Open Learning Resource",
+  "type": "object",
+  "required": ["id", "kind", "title", "canonical_url", "provenance", "status"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "kind": {"type": "string", "enum": ["video", "article", "podcast", "course", "book", "domain-module", "synthetic"]},
+    "title": {"type": "string", "minLength": 1},
+    "creator": {"type": ["string", "null"]},
+    "canonical_url": {"type": "string", "format": "uri"},
+    "published_at": {"type": ["string", "null"], "format": "date-time"},
+    "language": {"type": "string"},
+    "concepts": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "license_note": {"type": ["string", "null"]},
+    "provenance": {"type": "string", "minLength": 1},
+    "status": {"type": "string", "enum": ["OBS", "REL", "HYP", "UNKNOWN", "REFUTED", "N.A."]}
+  },
+  "additionalProperties": false
+}

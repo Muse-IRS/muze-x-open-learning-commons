@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Open Learning Concept",
+  "type": "object",
+  "required": ["id", "label", "status"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "label": {"type": "string", "minLength": 1},
+    "description": {"type": "string"},
+    "domains": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "status": {"type": "string", "enum": ["OBS", "REL", "HYP", "UNKNOWN", "REFUTED", "N.A."]}
+  },
+  "additionalProperties": false
+}

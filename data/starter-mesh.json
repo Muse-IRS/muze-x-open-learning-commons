@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0",
+  "status": "EXPLORATORY",
+  "concepts": [
+    {"id": "data-journey", "label": "Parcours des données", "description": "Comprendre quelles données sont utilisées, où elles circulent et quels contrôles sont disponibles.", "domains": ["rgpd"], "status": "REL"},
+    {"id": "information-provenance", "label": "Provenance de l'information", "description": "Relier une information à sa source, son contexte et son temps avant de conclure.", "domains": ["information"], "status": "REL"},
+    {"id": "energy-measurement", "label": "Énergie et mesure", "description": "Explorer la relation entre mesure, consommation et restitution énergétique.", "domains": ["energy"], "status": "REL"},
+    {"id": "housing-dpe", "label": "DPE et logement", "description": "Comprendre les informations publiques associées au diagnostic énergétique du logement.", "domains": ["dpe"], "status": "REL"},
+    {"id": "knowledge-mesh", "label": "Maillage de connaissances", "description": "Naviguer entre ressources, concepts et domaines sans supposer qu'un domaine est isolé.", "domains": ["open-learning"], "status": "HYP"},
+    {"id": "learner-autonomy", "label": "Autonomie de l'apprenant", "description": "La plateforme propose des chemins ; l'utilisateur choisit, ignore, approfondit ou quitte.", "domains": ["open-learning"], "status": "REL"}
+  ],
+  "resources": [
+    {"id": "mxlab-home", "kind": "domain-module", "title": "Muze-X Lab — plateforme multi-domaine", "creator": "Muze-X contributors", "canonical_url": "https://muse-irs.github.io/muze-x-lab-collaborative-platform/", "published_at": null, "language": "fr", "concepts": ["knowledge-mesh"], "license_note": "Public project page; follow source repository terms.", "provenance": "Muse-IRS/muze-x-lab-collaborative-platform", "status": "OBS"},
+    {"id": "mxlab-information", "kind": "domain-module", "title": "Traitement informationnel transversal", "creator": "Muze-X contributors", "canonical_url": "https://muse-irs.github.io/muze-x-lab-collaborative-platform/information/", "published_at": null, "language": "fr", "concepts": ["information-provenance"], "license_note": "Public project page; follow source repository terms.", "provenance": "Muse-IRS/muze-x-lab-collaborative-platform", "status": "OBS"},
+    {"id": "mxlab-energy", "kind": "domain-module", "title": "Énergie / Linky", "creator": "Muze-X contributors", "canonical_url": "https://muse-irs.github.io/muze-x-lab-collaborative-platform/energy/", "published_at": null, "language": "fr", "concepts": ["energy-measurement"], "license_note": "Public project page; follow source repository terms.", "provenance": "Muse-IRS/muze-x-lab-collaborative-platform", "status": "OBS"},
+    {"id": "mxlab-dpe", "kind": "domain-module", "title": "DPE / logement", "creator": "Muze-X contributors", "canonical_url": "https://muse-irs.github.io/muze-x-lab-collaborative-platform/dpe/", "published_at": null, "language": "fr", "concepts": ["housing-dpe"], "license_note": "Public project page; follow source repository terms.", "provenance": "Muse-IRS/muze-x-lab-collaborative-platform", "status": "OBS"},
+    {"id": "rgpd-audit", "kind": "domain-module", "title": "RGPD Data Journey Audit", "creator": "Muze-X contributors", "canonical_url": "https://muse-irs.github.io/rgpd-data-journey-audit/", "published_at": null, "language": "fr", "concepts": ["data-journey"], "license_note": "Public project page; follow source repository terms.", "provenance": "Muse-IRS/rgpd-data-journey-audit", "status": "OBS"}
+  ],
+  "relations": [
+    {"from": "data-journey", "to": "rgpd-audit", "type": "opens_domain", "status": "OBS", "provenance": "public project topology"},
+    {"from": "information-provenance", "to": "mxlab-information", "type": "opens_domain", "status": "OBS", "provenance": "public project topology"},
+    {"from": "energy-measurement", "to": "mxlab-energy", "type": "opens_domain", "status": "OBS", "provenance": "public project topology"},
+    {"from": "housing-dpe", "to": "mxlab-dpe", "type": "opens_domain", "status": "OBS", "provenance": "public project topology"},
+    {"from": "knowledge-mesh", "to": "learner-autonomy", "type": "relates_to", "status": "HYP", "provenance": "project conceptual model"}
+  ]
+}
