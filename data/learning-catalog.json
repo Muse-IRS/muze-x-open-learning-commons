@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "status": "EXPLORATORY",
   "verified_on": "2026-09-03",
   "scope": "Public learning-resource index. Presence in this catalog is not an endorsement or validation of every statement in the linked source.",
@@ -16,6 +16,20 @@
       "access_note": "Les modalités d’inscription, de disponibilité, de certification et de tarification dépendent de chaque cours.",
       "rights_note": "Open Learning indexe les métadonnées et renvoie à la source originale ; aucun contenu de cours n’est recopié ici.",
       "provenance": "Site officiel FUN MOOC",
+      "epistemic": {"source_existence": "OBS", "pedagogical_relevance": "REL"}
+    },
+    {
+      "id": "openclassrooms",
+      "kind": "learning-platform",
+      "title": "OpenClassrooms",
+      "creator": "OpenClassrooms",
+      "canonical_url": "https://openclassrooms.com/fr/",
+      "language": "fr",
+      "topics": ["développement web", "informatique", "data", "design", "cybersécurité", "compétences professionnelles", "formation"],
+      "description": "Plateforme de formation en ligne proposant des cours et des parcours professionnalisants dans le numérique et d’autres domaines.",
+      "access_note": "OpenClassrooms distingue notamment des cours en libre accès et des formations diplômantes ou professionnalisantes, selon des modalités propres à chaque offre.",
+      "rights_note": "Les cours et parcours restent hébergés et régis par OpenClassrooms ; Open Learning indexe uniquement la plateforme et renvoie à la source originale.",
+      "provenance": "Site officiel OpenClassrooms",
       "epistemic": {"source_existence": "OBS", "pedagogical_relevance": "REL"}
     },
     {
