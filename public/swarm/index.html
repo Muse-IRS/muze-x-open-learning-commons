@@ -16,73 +16,58 @@
   <canvas id="swarm-field" aria-hidden="true"></canvas>
   <div class="field-vignette" aria-hidden="true"></div>
 
-  <header class="topbar lab-topbar">
-    <a class="brand" href="../" aria-label="Retour à Open Learning Commons">
-      <img src="../assets/brand-logo.svg" alt="Muze-X">
-      <span>Swarm Field Lab</span>
-    </a>
-    <nav class="topnav lab-nav" aria-label="Navigation">
-      <a href="../">Open Learning ↩</a>
-      <a href="https://muse-irs.github.io/muze-x-lab-collaborative-platform/">Muze-X Lab ↗</a>
-      <button id="swarm-controls-open" class="lab-drawer-trigger" type="button" aria-controls="swarm-controls" aria-expanded="false">Réglages</button>
-    </nav>
+  <header class="topbar lab-topbar" data-field-ui>
+    <div class="lab-head-primary">
+      <a class="brand" href="../" aria-label="Retour à Open Learning Commons">
+        <img src="../assets/brand-logo.svg" alt="Muze-X">
+        <span>Swarm Field Lab</span>
+      </a>
+      <nav class="topnav lab-nav" aria-label="Navigation">
+        <a href="../">Open Learning ↩</a>
+        <a href="https://muse-irs.github.io/muze-x-lab-collaborative-platform/">Muze-X Lab ↗</a>
+      </nav>
+    </div>
+
+    <div class="lab-header-controls" aria-label="Paramètres du champ réactif">
+      <div class="lab-control-group">
+        <span class="lab-control-label">Mode</span>
+        <div class="mode-buttons" role="group" aria-label="Mode du champ visuel">
+          <button type="button" data-field-mode="attract" aria-pressed="true">Attracteur</button>
+          <button type="button" data-field-mode="disperse" aria-pressed="false">Dispersion</button>
+          <button type="button" data-field-mode="vortex" aria-pressed="false">Vortex</button>
+          <button type="button" data-field-mode="relax" aria-pressed="false">Calme</button>
+        </div>
+      </div>
+
+      <div class="lab-control-group">
+        <span class="lab-control-label">Vitesse · <strong id="field-speed-value" aria-live="polite">1×</strong></span>
+        <div class="mode-buttons" role="group" aria-label="Vitesse du champ visuel">
+          <button type="button" data-field-speed="0.75" aria-pressed="false" aria-label="Vitesse 0,75 fois">0,75×</button>
+          <button type="button" data-field-speed="1" aria-pressed="false" aria-label="Vitesse normale">1×</button>
+          <button type="button" data-field-speed="1.4" aria-pressed="false" aria-label="Vitesse 1,4 fois">1,4×</button>
+          <button type="button" data-field-speed="1.8" aria-pressed="false" aria-label="Vitesse 1,8 fois">1,8×</button>
+          <button type="button" data-field-speed="2.2" aria-pressed="false" aria-label="Vitesse 2,2 fois">2,2×</button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <main class="field-lab-surface" aria-label="Surface d'expérimentation du champ réactif">
-    <section class="lab-anchor-wrap" aria-label="Ancre visuelle du champ réactif">
-      <div class="lab-swarm-anchor" data-swarm-anchor>
-        <span>ANCRE</span>
+    <section class="lab-anchor-wrap" aria-label="Ancre annulaire du champ réactif">
+      <div class="lab-swarm-anchor" data-swarm-anchor data-swarm-anchor-mode="ring" data-swarm-anchor-strength="0.30">
+        <span>ANCRE ANNULAIRE</span>
         <strong>Muze-X</strong>
-        <small>les essaims reviennent ici</small>
+        <small>le contour attire · le centre reste traversable</small>
         <a href="../">Open Learning ↗</a>
       </div>
     </section>
   </main>
 
-  <aside class="lab-drawer glass-panel" id="swarm-controls" aria-labelledby="field-lab-title" aria-hidden="true">
-    <div class="lab-drawer-heading">
-      <div>
-        <p class="eyebrow">Logique d’interface conceptuelle Muze-X</p>
-        <h1 id="field-lab-title">Champ <span>réactif.</span></h1>
-      </div>
-      <button class="lab-drawer-close" id="swarm-controls-close" type="button" aria-label="Fermer les réglages">Fermer</button>
-    </div>
-
-    <p class="field-lab-copy">Touchez le champ : l’interaction modifie uniquement la dynamique visuelle locale. Le cercle reste l’ancre perceptive commune.</p>
-
-    <div class="field-controller field-controller-lab" aria-label="Commandes du champ réactif">
-      <span class="controller-label">Mode</span>
-      <div class="mode-buttons" role="group" aria-label="Mode du champ visuel">
-        <button type="button" data-field-mode="attract" aria-pressed="true">Attracteur</button>
-        <button type="button" data-field-mode="disperse" aria-pressed="false">Dispersion</button>
-        <button type="button" data-field-mode="vortex" aria-pressed="false">Vortex</button>
-        <button type="button" data-field-mode="relax" aria-pressed="false">Calme</button>
-      </div>
-
-      <span class="controller-label speed-label">Vitesse · <strong id="field-speed-value" aria-live="polite">1×</strong></span>
-      <div class="mode-buttons" role="group" aria-label="Vitesse du champ visuel">
-        <button type="button" data-field-speed="0.75" aria-pressed="false" aria-label="Vitesse 0,75 fois">0,75×</button>
-        <button type="button" data-field-speed="1" aria-pressed="false" aria-label="Vitesse normale">1×</button>
-        <button type="button" data-field-speed="1.4" aria-pressed="false" aria-label="Vitesse 1,4 fois">1,4×</button>
-        <button type="button" data-field-speed="1.8" aria-pressed="false" aria-label="Vitesse 1,8 fois">1,8×</button>
-        <button type="button" data-field-speed="2.2" aria-pressed="false" aria-label="Vitesse 2,2 fois">2,2×</button>
-      </div>
-    </div>
-
-    <details class="field-lab-note">
-      <summary>Technique & statut</summary>
-      <div class="field-lab-note-content">
-        <strong>Technique actuelle</strong>
-        <span>Canvas 2D · deux essaims cyan/violet · variable de profondeur latente · taille / halo / alpha / mouvement différentiel.</span>
-        <strong>Statut</strong>
-        <span>R&D exploratoire — métaphore visuelle ≠ modèle scientifique.</span>
-        <code>VISUAL_FIELD != LEARNING_ENGINE</code>
-        <code>PERCEIVED_DEPTH != GEOMETRIC_3D</code>
-      </div>
-    </details>
-  </aside>
+  <footer class="lab-footer" data-field-ui>
+    <span><b>Technique</b> · Canvas 2D · deux essaims cyan/violet · ancre annulaire · profondeur perceptive émergente</span>
+    <span><b>Statut</b> · R&D exploratoire — métaphore visuelle ≠ modèle scientifique</span>
+  </footer>
 
   <script src="../assets/swarm.js"></script>
-  <script src="../assets/swarm-lab.js"></script>
 </body>
 </html>
