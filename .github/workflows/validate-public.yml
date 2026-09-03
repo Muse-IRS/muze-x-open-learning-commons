@@ -39,12 +39,20 @@ jobs:
           test -f public/assets/brand-logo.svg
           test -f public/assets/favicon.svg
 
-      - name: Validate JSON syntax
+      - name: Validate JSON syntax and public URLs
         run: |
           python -m json.tool schemas/resource.schema.json >/dev/null
           python -m json.tool schemas/concept.schema.json >/dev/null
           python -m json.tool schemas/relation.schema.json >/dev/null
           python -m json.tool data/starter-mesh.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path('data/starter-mesh.json').read_text())
+          bad = [r.get('canonical_url') for r in data.get('resources', []) if not str(r.get('canonical_url', '')).startswith('https://')]
+          if bad:
+              raise SystemExit(f'Non-HTTPS public resource URL(s): {bad}')
+          PY
 
       - name: Check JavaScript syntax
         run: |
