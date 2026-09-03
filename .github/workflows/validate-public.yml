@@ -41,7 +41,6 @@ jobs:
           test -f public/assets/learning.css
           test -f public/assets/anchor.css
           test -f public/assets/swarm-lab.css
-          test -f public/assets/swarm-lab.js
           test -f public/assets/swarm.js
           test -f public/assets/app.js
           test -f public/assets/brand-logo.svg
@@ -73,7 +72,6 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check public/assets/swarm.js
-          node --check public/assets/swarm-lab.js
           node --check public/assets/app.js
 
       - name: Preserve learning aggregator
@@ -98,18 +96,21 @@ jobs:
           grep -q 'data-field-speed="2.2"' public/swarm/index.html
           grep -q 'Swarm Field Lab' public/swarm/index.html
 
-      - name: Preserve side drawer and swarm anchor in Swarm Field Lab
+      - name: Preserve header controls footer note and ring anchor
         shell: bash
         run: |
           set -euo pipefail
-          grep -q 'id="swarm-controls-open"' public/swarm/index.html
-          grep -q 'id="swarm-controls-close"' public/swarm/index.html
-          grep -q 'class="lab-drawer glass-panel"' public/swarm/index.html
-          grep -q 'data-swarm-anchor' public/swarm/index.html
-          grep -q 'lab-swarm-anchor' public/swarm/index.html
-          grep -q 'transform:translateX(calc(100% + 36px))' public/assets/swarm-lab.css
-          grep -q 'drawer-open .lab-drawer' public/assets/swarm-lab.css
-          grep -q 'setOpen' public/assets/swarm-lab.js
+          grep -q 'class="lab-header-controls"' public/swarm/index.html
+          grep -q 'class="lab-footer"' public/swarm/index.html
+          grep -q 'data-swarm-anchor-mode="ring"' public/swarm/index.html
+          grep -q 'data-swarm-anchor-strength="0.30"' public/swarm/index.html
+          grep -q 'ANCRE ANNULAIRE' public/swarm/index.html
+          grep -q 'applyRingAnchor' public/assets/swarm.js
+          grep -q 'The target is the circumference, not the centre' public/assets/swarm.js
+          if grep -q 'lab-drawer' public/swarm/index.html; then
+            echo 'Swarm Field Lab controls must stay in the header, not in a side drawer.' >&2
+            exit 1
+          fi
 
       - name: Preserve immersive Muze-X portal bridge and bottom anchor
         shell: bash
