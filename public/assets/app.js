@@ -13,6 +13,15 @@
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   }[char]));
 
+  function safeHttpsUrl(value) {
+    try {
+      const url = new URL(String(value || ''));
+      return url.protocol === 'https:' ? url.href : '#';
+    } catch {
+      return '#';
+    }
+  }
+
   function normalize(value) {
     return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   }
@@ -33,7 +42,7 @@
       const resources = resourcesForConcept(concept.id);
       const domains = (concept.domains || []).map((domain) => `<span class="tag">${escapeHtml(domain)}</span>`).join('');
       const action = resources[0]
-        ? `<a href="${escapeHtml(resources[0].canonical_url)}">Ouvrir le domaine ↗</a>`
+        ? `<a href="${escapeHtml(safeHttpsUrl(resources[0].canonical_url))}">Ouvrir le domaine ↗</a>`
         : `<a href="https://github.com/Muse-IRS/muze-x-open-learning-commons/issues">Proposer une ressource ↗</a>`;
       return `
         <article class="concept-card" data-concept="${escapeHtml(concept.id)}">
@@ -64,13 +73,14 @@
         const concept = mesh.concepts.find((item) => item.id === id);
         return `<span class="tag">${escapeHtml(concept?.label || id)}</span>`;
       }).join('');
+      const href = safeHttpsUrl(resource.canonical_url);
       return `
         <article class="resource-card">
           <div class="card-meta"><span class="tag status">${escapeHtml(resource.status)}</span><span class="tag">${escapeHtml(resource.kind)}</span></div>
           <h3>${escapeHtml(resource.title)}</h3>
           <p>Provenance : ${escapeHtml(resource.provenance)}</p>
           <div class="card-meta">${concepts}</div>
-          <div class="card-actions"><a href="${escapeHtml(resource.canonical_url)}">Source originale ↗</a></div>
+          <div class="card-actions"><a href="${escapeHtml(href)}">Source originale ↗</a></div>
         </article>`;
     }).join('');
   }
