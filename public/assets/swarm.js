@@ -156,7 +156,7 @@
   function setSpeed(value) {
     const parsed = Number(value);
     if (!Number.isFinite(parsed)) return;
-    state.speed = reducedMotion ? clamp(parsed, .45, 1) : clamp(parsed, .65, 2.2);
+    state.speed = reducedMotion ? clamp(parsed, .45, 1) : clamp(parsed, .65, 4.4);
     updateSpeedUI();
   }
 
