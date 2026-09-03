@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Muze-X Open Learning Commons — maillage public de ressources éducatives, concepts, domaines et contributions humain/IA.">
+  <meta name="description" content="Muze-X Open Learning Commons — agrégateur public de ressources éducatives, concepts, domaines et contributions humain/IA.">
   <meta name="theme-color" content="#040a16">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'">
   <title>Muze-X Open Learning Commons</title>
   <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
   <link rel="stylesheet" href="./assets/styles.css">
+  <link rel="stylesheet" href="./assets/learning.css">
   <link rel="stylesheet" href="./assets/anchor.css">
 </head>
 <body>
@@ -22,8 +23,9 @@
       <span>Open Learning Commons</span>
     </a>
     <nav class="topnav" aria-label="Navigation principale">
-      <a href="#explore">Apprendre</a>
+      <a href="#learning-field">Apprendre</a>
       <a href="#mesh">Maillage</a>
+      <a href="./swarm/">Champ visuel ↗</a>
       <a href="https://muse-irs.github.io/muze-x-lab-collaborative-platform/">Muze-X Lab ↗</a>
       <a href="https://github.com/Muse-IRS/muze-x-open-learning-commons">GitHub ↗</a>
     </nav>
@@ -34,58 +36,61 @@
       <div class="hero glass-panel">
         <p class="eyebrow">Recherche & développement conceptuel exploratoire</p>
         <h1>Apprendre.<br><span>Relier.</span> Explorer.</h1>
-        <p class="hero-copy">Un maillage public de ressources éducatives et de domaines. La plateforme propose des chemins ; l’utilisateur choisit où aller, quoi approfondir et s’il souhaite un jour contribuer.</p>
+        <p class="hero-copy">Un agrégateur public de ressources éducatives relié à un maillage de concepts et de domaines. La plateforme propose des chemins ; l’utilisateur choisit quoi consulter, approfondir, ignorer ou relier.</p>
 
         <form class="search-box" id="concept-search" role="search">
-          <label class="sr-only" for="search-input">Rechercher un concept</label>
-          <input id="search-input" type="search" autocomplete="off" placeholder="Que voulez-vous comprendre ?" maxlength="120">
+          <label class="sr-only" for="search-input">Rechercher dans les concepts et ressources</label>
+          <input id="search-input" type="search" autocomplete="off" placeholder="Que voulez-vous apprendre ou comprendre ?" maxlength="120">
           <button type="submit">Explorer</button>
         </form>
 
         <div class="principle-line" aria-label="Principe de traitement">
           <span>REUSE</span><b>›</b><span>RELATE</span><b>›</b><span>SYNTHESIZE</span><b>›</b><span>GENERATE</span>
         </div>
-
-        <div class="field-controller" aria-label="Réponse visuelle expérimentale">
-          <span class="controller-label">Champ réactif</span>
-          <div class="mode-buttons" role="group" aria-label="Mode du champ visuel">
-            <button type="button" data-field-mode="attract" aria-pressed="true">Attracteur</button>
-            <button type="button" data-field-mode="disperse" aria-pressed="false">Dispersion</button>
-            <button type="button" data-field-mode="vortex" aria-pressed="false">Vortex</button>
-            <button type="button" data-field-mode="relax" aria-pressed="false">Calme</button>
-          </div>
-
-          <span class="controller-label">Vitesse · <strong id="field-speed-value" aria-live="polite">1×</strong></span>
-          <div class="mode-buttons" role="group" aria-label="Vitesse du champ visuel">
-            <button type="button" data-field-speed="0.75" aria-pressed="false" aria-label="Vitesse 0,75 fois">0,75×</button>
-            <button type="button" data-field-speed="1" aria-pressed="false" aria-label="Vitesse normale">1×</button>
-            <button type="button" data-field-speed="1.4" aria-pressed="false" aria-label="Vitesse 1,4 fois">1,4×</button>
-            <button type="button" data-field-speed="1.8" aria-pressed="false" aria-label="Vitesse 1,8 fois">1,8×</button>
-            <button type="button" data-field-speed="2.2" aria-pressed="false" aria-label="Vitesse 2,2 fois">2,2×</button>
-          </div>
-
-          <p class="field-hint">Touchez ou déplacez le pointeur : l’essaim répond uniquement à cette interaction explicite. Sa vitesse est réglable localement et il ne choisit aucun contenu.</p>
-        </div>
       </div>
 
       <aside class="hero-side glass-panel" aria-label="État du commun">
         <div><span id="concept-count">—</span><small>concepts initiaux</small></div>
-        <div><span id="resource-count">—</span><small>ressources / modules</small></div>
+        <div><span id="resource-count">—</span><small>ressources indexées</small></div>
         <div><span id="relation-count">—</span><small>relations tracées</small></div>
         <p><strong>GitHub `main`</strong><br>mémoire publique versionnée du projet.</p>
       </aside>
     </section>
 
+    <section class="content-shell learning-field" id="learning-field">
+      <div class="section-heading learning-heading">
+        <p class="eyebrow">Champ d’apprentissage</p>
+        <h2>Trouver avant de générer.</h2>
+        <p>Open Learning commence par agréger des ressources publiques existantes. Chaque entrée conserve sa provenance, son type, sa langue et une note d’accès. L’indexation rend une ressource découvrable ; elle ne valide pas automatiquement son contenu.</p>
+      </div>
+
+      <div class="learning-filters" role="group" aria-label="Filtrer les ressources d’apprentissage">
+        <button type="button" data-learning-filter="all" aria-pressed="true">Toutes</button>
+        <button type="button" data-learning-filter="fr" aria-pressed="false">Français</button>
+        <button type="button" data-learning-filter="en" aria-pressed="false">English</button>
+        <button type="button" data-learning-filter="course" aria-pressed="false">Cours</button>
+        <button type="button" data-learning-filter="reference" aria-pressed="false">Références</button>
+      </div>
+
+      <div class="learning-grid" id="learning-grid" aria-live="polite"></div>
+      <div class="empty-state" id="learning-empty-state" hidden>
+        <h3>Aucune ressource indexée pour cette recherche.</h3>
+        <p>Ce résultat reste valide : le catalogue public est volontairement minimal au bootstrap. Les futurs adapters pourront élargir le champ sans changer le principe de provenance.</p>
+      </div>
+
+      <p class="aggregation-boundary"><strong>Frontière :</strong> source indexée ≠ contenu approuvé · accès public ≠ droit de copie · source ≠ interprétation ≠ synthèse IA.</p>
+    </section>
+
     <section class="content-shell" id="explore">
       <div class="section-heading">
-        <p class="eyebrow">Entrée libre</p>
-        <h2>Commencer par un concept</h2>
-        <p>Le bootstrap contient un petit maillage démonstratif. Il sera enrichi par les contributions publiques et les futurs adapters de sources.</p>
+        <p class="eyebrow">Concepts</p>
+        <h2>Relier ce que l’on apprend.</h2>
+        <p>Le maillage conceptuel reste volontairement petit : il sert à relier les ressources à des questions et domaines, sans prétendre qu’une relation affichée constitue une preuve.</p>
       </div>
       <div class="concept-grid" id="concept-grid" aria-live="polite"></div>
       <div class="empty-state" id="empty-state" hidden>
         <h3>Aucun concept exact dans le maillage initial.</h3>
-        <p>Ce résultat est valide : le corpus public est encore minimal. Vous pouvez explorer un domaine existant ou proposer une nouvelle relation sur GitHub.</p>
+        <p>La recherche peut néanmoins produire des ressources dans le champ d’apprentissage. Un concept absent pourra ensuite être proposé et relié publiquement.</p>
       </div>
     </section>
 
@@ -93,7 +98,7 @@
       <div class="section-heading">
         <p class="eyebrow">Connaissance relationnelle</p>
         <h2>Du concept au domaine — et retour.</h2>
-        <p>Chaque ressource conserve sa provenance. Une relation dessinée dans le maillage reste une relation qualifiée : elle ne devient pas une preuve par visualisation.</p>
+        <p>Chaque ressource Muze-X conserve sa provenance. Une relation dessinée dans le maillage reste une relation qualifiée : elle ne devient pas une preuve par visualisation.</p>
       </div>
       <div class="mesh-strip" aria-label="Boucle de connaissance">
         <span>RESSOURCE</span><b>→</b><span>CONCEPT</span><b>→</b><span>RELATION</span><b>→</b><span>DOMAINE</span><b>↔</b><span>APPRENTISSAGE</span>
@@ -108,6 +113,7 @@
         <p>Pas d’autoplay forcé, pas d’urgence artificielle, pas de contribution sollicitée comme objectif produit. Apprendre peut mener à explorer un module. Explorer peut donner envie d’apprendre un nouveau concept. Contribuer reste une possibilité.</p>
         <div class="code-locks">
           <code>LEARNING_SUPPORT != BEHAVIORAL_INFLUENCE</code>
+          <code>INDEXED_RESOURCE != ENDORSED_CLAIM</code>
           <code>RELATION != CAUSATION</code>
           <code>MODEL != REALITY</code>
         </div>
@@ -115,8 +121,8 @@
 
       <article class="glass-panel contribute-card" id="contribute">
         <p class="eyebrow">Commun public</p>
-        <h2>Un domaine manque ?</h2>
-        <p>Une question d’apprentissage peut devenir une exploration, puis éventuellement un module Muze-X. Humains et IA peuvent proposer sources, concepts, relations, corrections ou interfaces dans le même historique Git.</p>
+        <h2>Une ressource ou un domaine manque ?</h2>
+        <p>Une question d’apprentissage peut devenir une relation, une exploration, puis éventuellement un module Muze-X. Humains et IA peuvent proposer sources, concepts, corrections ou interfaces dans le même historique Git.</p>
         <div class="cta-row">
           <a class="button primary" href="https://github.com/Muse-IRS/muze-x-open-learning-commons/issues">Voir les issues ↗</a>
           <a class="button secondary" href="https://github.com/Muse-IRS/muze-x-open-learning-commons/blob/main/CONTRIBUTING.md">Contribuer ↗</a>
@@ -125,7 +131,7 @@
     </section>
 
     <section class="content-shell privacy-note">
-      <p><strong>Bootstrap sans profil.</strong> Cette version ne crée aucun compte, n’utilise aucun jeton YouTube, ne stocke pas la recherche et n’infère aucun intérêt depuis les mouvements du champ visuel. Les données affichées proviennent du graphe JSON public versionné dans le dépôt.</p>
+      <p><strong>Bootstrap sans profil.</strong> Cette version ne crée aucun compte, n’utilise aucun jeton YouTube, ne stocke pas la recherche et n’infère aucun intérêt depuis les mouvements du champ visuel. Les données affichées proviennent du graphe et du catalogue JSON publics versionnés dans le dépôt.</p>
     </section>
 
     <section class="content-shell bridge-anchor" id="muze-x-bridge" aria-labelledby="muze-x-bridge-title">
@@ -144,6 +150,7 @@
         <div class="interface-technique-lines">
           <span><b>Technique actuelle</b> · Canvas 2D · deux essaims cyan/violet · champ plein viewport · attracteur d’ancre</span>
           <span><b>Rendu</b> · profondeur perceptive émergente · rassemblement dynamique lorsque l’ancre entre dans le viewport</span>
+          <span><b>Interface dédiée</b> · <a href="./swarm/">ouvrir le Swarm Field Lab ↗</a></span>
           <span><b>Statut</b> · R&D exploratoire — métaphore visuelle ≠ modèle scientifique</span>
         </div>
       </div>
