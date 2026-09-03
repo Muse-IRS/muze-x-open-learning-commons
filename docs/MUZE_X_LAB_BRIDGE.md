@@ -18,26 +18,53 @@ A Muze-X module may expose a concept that deserves background learning and link 
 
 ## Portal attractor
 
-Open Learning Commons carries the immersive reference implementation of the Muze-X portal attractor: the full-screen reactive swarm remains visible through and around the circular Muze-X Lab portal.
+Open Learning Commons carries the immersive reference implementation of the Muze-X portal attractor: the full-screen reactive swarm remains visible through the complete page and the circular navigation portal is positioned near the bottom, immediately before the footer.
 
 The portal is a navigation language, not a cognitive or epistemic instrument.
 
 ```text
 PORTAL_ATTRACTOR
 =
-VISIBLE_NAVIGATION_SIGNAL
+FULL_VIEWPORT_SWARM_FIELD
++
+BOTTOM_NAVIGATION_ANCHOR
 +
 EXPLICIT_USER_ACTION
 ```
 
+When the circular anchor enters the viewport, the same two swarms that remain active across the complete page converge locally toward the anchor. When the anchor leaves the viewport, the particles return to their normal full-screen dynamics.
+
 ```text
+ANCHOR_VISIBLE
+-> LOCAL_SWARM_GATHERING
+
+ANCHOR_HIDDEN
+-> BASE_FIELD_DYNAMICS
+```
+
+The anchor does not create a second swarm and does not replace the persistent background field.
+
+The current visual implementation uses Canvas 2D with two cyan/violet particle populations. Apparent depth is produced through size, glow, motion and a latent depth parameter; no conventional 3D scene is claimed.
+
+```text
+PERCEIVED_DEPTH != GEOMETRIC_3D
 VISUAL_METAPHOR != SCIENTIFIC_PROOF
 INTERACTION_EFFECT != COGNITIVE_MEASUREMENT
 ```
 
-Pointer and touch events may modify the visual field only. They must not be used to infer hidden interests, select learning content, change pedagogical ranking or create a behavioural profile.
+Pointer, touch and scroll visibility may modify the visual field only. They must not be used to infer hidden interests, select learning content, change pedagogical ranking or create a behavioural profile.
 
-Compact derivatives of this attractor may be used by other autonomous Muze-X public deployments as explicit return portals to the multi-domain platform.
+## Bottom anchor presentation
+
+The anchor diameter is responsive and calibrated around its interior text rather than the document grid. The current tablet/desktop target is approximately `292 CSS px`, with a smaller mobile target.
+
+Directly below the circle, the public interface exposes the implementation status in plain language:
+
+- current technique;
+- rendered perceptual effect;
+- exploratory epistemic qualification.
+
+This information sits outside the footer so the visual behaviour and its technical qualification are read together.
 
 ## Context contract candidate
 
@@ -52,4 +79,14 @@ No personal profile is required for this bridge.
 
 ## Deployment invariant
 
-The Open Learning public interface must preserve an explicit Muze-X Lab portal. CI verifies both the portal element and its canonical public destination so future interface work cannot silently detach the commons from the Muze-X knowledge mesh.
+The Open Learning public interface must preserve:
+
+```text
+FULL_VIEWPORT_SWARM
++
+BOTTOM_ANCHOR
++
+INTERFACE_TECHNIQUE_NOTE
+```
+
+CI verifies the anchor element, its canonical public destination, the visual-field implementation and the conceptual-interface qualification so future interface work cannot silently detach the commons from the Muze-X knowledge mesh.
