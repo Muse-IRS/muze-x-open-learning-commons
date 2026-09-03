@@ -6,12 +6,18 @@
 
   const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isIPad = /iPad/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  const DENSITY_BOOST = 1.5;
+  const DEFAULT_SPEED = reducedMotion ? 0.65 : (isIPad ? 1.4 : 1.0);
 
   const state = {
     width: 0,
     height: 0,
     dpr: 1,
     mode: 'attract',
+    speed: DEFAULT_SPEED,
     pointer: { x: 0, y: 0, active: false, pressure: 0 },
     particles: [],
     last: performance.now(),
@@ -22,10 +28,22 @@
   const rand = (a, b) => a + Math.random() * (b - a);
 
   function particleCount() {
-    if (reducedMotion) return clamp(Math.round((state.width * state.height) / 15000), 45, 90);
     const cores = navigator.hardwareConcurrency || 4;
+
+    if (reducedMotion) {
+      const base = clamp(Math.round((state.width * state.height) / 15000), 45, 90);
+      return Math.max(2, Math.round((base * 1.15) / 2) * 2);
+    }
+
     const density = cores >= 8 ? 3200 : cores >= 4 ? 4200 : 5600;
-    return clamp(Math.round((state.width * state.height) / density), 150, cores >= 8 ? 460 : 330);
+    const base = clamp(
+      Math.round((state.width * state.height) / density),
+      150,
+      cores >= 8 ? 460 : 330
+    );
+
+    // +50 % compared with the bootstrap, kept even so both swarms remain equal.
+    return Math.max(2, Math.round((base * DENSITY_BOOST) / 2) * 2);
   }
 
   function makeParticle(index) {
@@ -88,12 +106,53 @@
     });
   });
 
+  const speedButtons = [...document.querySelectorAll('[data-field-speed]')];
+  const speedOutput = document.getElementById('field-speed-value');
+
+  function speedLabel(value) {
+    return `${value.toFixed(value % 1 === 0 ? 0 : 1).replace('.', ',')}×`;
+  }
+
+  function updateSpeedUI() {
+    if (speedOutput) speedOutput.textContent = speedLabel(state.speed);
+    let nearest = null;
+    let nearestDistance = Infinity;
+
+    for (const button of speedButtons) {
+      const value = Number(button.dataset.fieldSpeed);
+      const distance = Math.abs(value - state.speed);
+      if (distance < nearestDistance) {
+        nearest = button;
+        nearestDistance = distance;
+      }
+    }
+
+    for (const button of speedButtons) {
+      button.setAttribute('aria-pressed', button === nearest ? 'true' : 'false');
+    }
+  }
+
+  function setSpeed(value) {
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) return;
+    state.speed = reducedMotion ? clamp(parsed, .45, 1) : clamp(parsed, .65, 2.2);
+    updateSpeedUI();
+  }
+
+  speedButtons.forEach((button) => {
+    button.addEventListener('click', () => setSpeed(button.dataset.fieldSpeed));
+  });
+
   function externalPulse(mode = 'attract') {
     if (['attract', 'disperse', 'vortex', 'relax'].includes(mode)) state.mode = mode;
     state.pulse = 1;
   }
 
-  window.MuzeField = { setMode: (mode) => externalPulse(mode), pulse: externalPulse };
+  window.MuzeField = {
+    setMode: (mode) => externalPulse(mode),
+    pulse: externalPulse,
+    setSpeed
+  };
 
   function updateParticle(p, dt, time) {
     const centerX = state.width * (.5 + (p.team === 0 ? -.055 : .055));
@@ -148,42 +207,46 @@
 
     p.vx += (fx / p.mass) * dt;
     p.vy += (fy / p.mass) * dt;
-    p.x += p.vx * dt;
-    p.y += p.vy * dt;
-    p.z += p.vz * dt;
+
+    // User speed changes visual travel without changing the learning layer or
+    // amplifying the force model itself.
+    const travelDt = dt * state.speed;
+    p.x += p.vx * travelDt;
+    p.y += p.vy * travelDt;
+    p.z += p.vz * travelDt;
 
     const damping = Math.pow(.972, dt);
     p.vx *= damping;
     p.vy *= damping;
     p.vz *= Math.pow(.94, dt);
 
-    if (p.x < -24) p.x = state.width + 24;
-    if (p.x > state.width + 24) p.x = -24;
-    if (p.y < -24) p.y = state.height + 24;
-    if (p.y > state.height + 24) p.y = -24;
+    if (p.x < -28) p.x = state.width + 28;
+    if (p.x > state.width + 28) p.x = -28;
+    if (p.y < -28) p.y = state.height + 28;
+    if (p.y > state.height + 28) p.y = -28;
     if (p.z < .12) { p.z = .12; p.vz = Math.abs(p.vz) * .45; }
     if (p.z > 1.05) { p.z = 1.05; p.vz = -Math.abs(p.vz) * .45; }
   }
 
   function drawParticle(p) {
-    const speed = Math.hypot(p.vx, p.vy);
-    const radius = clamp(.75 + p.z * 2.55 + speed * .06, .9, 5.2);
-    const alpha = clamp(.18 + p.z * .68, .18, .92);
+    const speed = Math.hypot(p.vx, p.vy) * state.speed;
+    const radius = clamp(1.15 + p.z * 3.35 + speed * .075, 1.35, 7.1);
+    const alpha = clamp(.2 + p.z * .7, .2, .95);
     const color = p.team === 0 ? `rgba(89,222,255,${alpha})` : `rgba(190,125,255,${alpha})`;
 
     ctx.beginPath();
     ctx.fillStyle = color;
-    ctx.shadowColor = p.team === 0 ? 'rgba(70,210,255,.55)' : 'rgba(174,92,255,.5)';
-    ctx.shadowBlur = reducedMotion ? 0 : 4 + p.z * 8;
+    ctx.shadowColor = p.team === 0 ? 'rgba(70,210,255,.62)' : 'rgba(174,92,255,.58)';
+    ctx.shadowBlur = reducedMotion ? 0 : 5 + p.z * 10;
     ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
     ctx.fill();
 
-    if (!reducedMotion && speed > 1.25 && p.z > .48) {
+    if (!reducedMotion && speed > 1.1 && p.z > .45) {
       ctx.beginPath();
-      ctx.strokeStyle = p.team === 0 ? `rgba(89,222,255,${alpha * .18})` : `rgba(190,125,255,${alpha * .18})`;
-      ctx.lineWidth = Math.max(.45, radius * .32);
+      ctx.strokeStyle = p.team === 0 ? `rgba(89,222,255,${alpha * .21})` : `rgba(190,125,255,${alpha * .21})`;
+      ctx.lineWidth = Math.max(.62, radius * .38);
       ctx.moveTo(p.x, p.y);
-      ctx.lineTo(p.x - p.vx * 3, p.y - p.vy * 3);
+      ctx.lineTo(p.x - p.vx * 3.6 * state.speed, p.y - p.vy * 3.6 * state.speed);
       ctx.stroke();
     }
   }
@@ -224,6 +287,7 @@
     requestAnimationFrame(frame);
   }
 
+  updateSpeedUI();
   resize();
   requestAnimationFrame(frame);
 })();

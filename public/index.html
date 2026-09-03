@@ -53,7 +53,17 @@
             <button type="button" data-field-mode="vortex" aria-pressed="false">Vortex</button>
             <button type="button" data-field-mode="relax" aria-pressed="false">Calme</button>
           </div>
-          <p class="field-hint">Touchez ou déplacez le pointeur : l’essaim répond uniquement à cette interaction explicite. Il ne choisit aucun contenu.</p>
+
+          <span class="controller-label">Vitesse · <strong id="field-speed-value" aria-live="polite">1×</strong></span>
+          <div class="mode-buttons" role="group" aria-label="Vitesse du champ visuel">
+            <button type="button" data-field-speed="0.75" aria-pressed="false" aria-label="Vitesse 0,75 fois">0,75×</button>
+            <button type="button" data-field-speed="1" aria-pressed="false" aria-label="Vitesse normale">1×</button>
+            <button type="button" data-field-speed="1.4" aria-pressed="false" aria-label="Vitesse 1,4 fois">1,4×</button>
+            <button type="button" data-field-speed="1.8" aria-pressed="false" aria-label="Vitesse 1,8 fois">1,8×</button>
+            <button type="button" data-field-speed="2.2" aria-pressed="false" aria-label="Vitesse 2,2 fois">2,2×</button>
+          </div>
+
+          <p class="field-hint">Touchez ou déplacez le pointeur : l’essaim répond uniquement à cette interaction explicite. Sa vitesse est réglable localement et il ne choisit aucun contenu.</p>
         </div>
       </div>
 

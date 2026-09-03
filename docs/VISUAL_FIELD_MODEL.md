@@ -17,6 +17,20 @@ The learning engine remains separate:
 VISUAL_FIELD != LEARNING_ENGINE
 ```
 
-The field may respond to pointer position, touch, viewport size, orientation and explicit visual mode selection. It must not infer hidden interests or choose learning content from those movements.
+The field may respond to pointer position, touch, viewport size, orientation, explicit visual mode selection and an explicit user-selected visual speed. It must not infer hidden interests or choose learning content from those movements.
+
+## Calibration
+
+The public bootstrap was first calibrated through direct iPad use. The current visual calibration therefore treats device feedback as interface observation, not as scientific validation of the field model.
+
+For the standard motion profile:
+
+- particle density is increased to `150 %` of the first public bootstrap while keeping the two swarms equally populated;
+- particle radius and motion trails are thicker to strengthen depth perception;
+- iPad receives a faster default visual travel factor (`1.4×`);
+- the user may explicitly choose `0.75×`, `1×`, `1.4×`, `1.8×` or `2.2×` during the current page session;
+- the speed setting affects only visual particle travel and does not alter learning-resource selection.
+
+`prefers-reduced-motion` remains an explicit exception: density and speed are reduced rather than forced to the standard calibration.
 
 Accessibility requirement: respect `prefers-reduced-motion` and adapt particle count to viewport/performance.
