@@ -1,0 +1,65 @@
+name: Validate public commons
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check required files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -f NOTICE
+          test -f CONTRIBUTING.md
+          test -f STATUS.md
+          test -f docs/PUBLIC_BOUNDARY.md
+          test -f docs/LEARNER_AUTONOMY.md
+          test -f docs/SOURCE_PROVENANCE_MODEL.md
+          test -f docs/CONCEPT_GRAPH_MODEL.md
+          test -f docs/MUZE_X_LAB_BRIDGE.md
+          test -f docs/VISUAL_FIELD_MODEL.md
+          test -f schemas/resource.schema.json
+          test -f schemas/concept.schema.json
+          test -f schemas/relation.schema.json
+          test -f data/starter-mesh.json
+          test -f public/index.html
+          test -f public/assets/styles.css
+          test -f public/assets/swarm.js
+          test -f public/assets/app.js
+          test -f public/assets/brand-logo.svg
+          test -f public/assets/favicon.svg
+
+      - name: Validate JSON syntax
+        run: |
+          python -m json.tool schemas/resource.schema.json >/dev/null
+          python -m json.tool schemas/concept.schema.json >/dev/null
+          python -m json.tool schemas/relation.schema.json >/dev/null
+          python -m json.tool data/starter-mesh.json >/dev/null
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check public/assets/swarm.js
+          node --check public/assets/app.js
+
+      - name: Enforce public boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RniE 'PRIVATE_CASE|PERSONAL_CASE|secret_key|api_key|client_secret|sk-[A-Za-z0-9_-]+' . --exclude-dir=.git --exclude='validate-public.yml'; then
+            echo 'Private or credential-like marker found in public repository.' >&2
+            exit 1
+          fi
+          if find . -type f \( -name '.env' -o -name '.env.local' -o -name '*.p12' -o -name '*.pfx' -o -name '*.pem' -o -name '*.key' \) | grep -q .; then
+            echo 'Environment or private-key files must not be committed.' >&2
+            exit 1
+          fi

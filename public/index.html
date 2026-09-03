@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="Muze-X Open Learning Commons — maillage public de ressources éducatives, concepts, domaines et contributions humain/IA.">
+  <meta name="theme-color" content="#040a16">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'">
+  <title>Muze-X Open Learning Commons</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+  <link rel="stylesheet" href="./assets/styles.css">
+</head>
+<body>
+  <canvas id="swarm-field" aria-hidden="true"></canvas>
+  <div class="field-vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Muze-X Open Learning Commons — accueil">
+      <img src="./assets/brand-logo.svg" alt="Muze-X Lab — Collaborative Platform">
+      <span>Open Learning Commons</span>
+    </a>
+    <nav class="topnav" aria-label="Navigation principale">
+      <a href="#explore">Apprendre</a>
+      <a href="#mesh">Maillage</a>
+      <a href="https://muse-irs.github.io/muze-x-lab-collaborative-platform/">Muze-X Lab ↗</a>
+      <a href="https://github.com/Muse-IRS/muze-x-open-learning-commons">GitHub ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero-shell">
+      <div class="hero glass-panel">
+        <p class="eyebrow">Recherche & développement conceptuel exploratoire</p>
+        <h1>Apprendre.<br><span>Relier.</span> Explorer.</h1>
+        <p class="hero-copy">Un maillage public de ressources éducatives et de domaines. La plateforme propose des chemins ; l’utilisateur choisit où aller, quoi approfondir et s’il souhaite un jour contribuer.</p>
+
+        <form class="search-box" id="concept-search" role="search">
+          <label class="sr-only" for="search-input">Rechercher un concept</label>
+          <input id="search-input" type="search" autocomplete="off" placeholder="Que voulez-vous comprendre ?" maxlength="120">
+          <button type="submit">Explorer</button>
+        </form>
+
+        <div class="principle-line" aria-label="Principe de traitement">
+          <span>REUSE</span><b>›</b><span>RELATE</span><b>›</b><span>SYNTHESIZE</span><b>›</b><span>GENERATE</span>
+        </div>
+
+        <div class="field-controller" aria-label="Réponse visuelle expérimentale">
+          <span class="controller-label">Champ réactif</span>
+          <div class="mode-buttons" role="group" aria-label="Mode du champ visuel">
+            <button type="button" data-field-mode="attract" aria-pressed="true">Attracteur</button>
+            <button type="button" data-field-mode="disperse" aria-pressed="false">Dispersion</button>
+            <button type="button" data-field-mode="vortex" aria-pressed="false">Vortex</button>
+            <button type="button" data-field-mode="relax" aria-pressed="false">Calme</button>
+          </div>
+          <p class="field-hint">Touchez ou déplacez le pointeur : l’essaim répond uniquement à cette interaction explicite. Il ne choisit aucun contenu.</p>
+        </div>
+      </div>
+
+      <aside class="hero-side glass-panel" aria-label="État du commun">
+        <div><span id="concept-count">—</span><small>concepts initiaux</small></div>
+        <div><span id="resource-count">—</span><small>ressources / modules</small></div>
+        <div><span id="relation-count">—</span><small>relations tracées</small></div>
+        <p><strong>GitHub `main`</strong><br>mémoire publique versionnée du projet.</p>
+      </aside>
+    </section>
+
+    <section class="content-shell" id="explore">
+      <div class="section-heading">
+        <p class="eyebrow">Entrée libre</p>
+        <h2>Commencer par un concept</h2>
+        <p>Le bootstrap contient un petit maillage démonstratif. Il sera enrichi par les contributions publiques et les futurs adapters de sources.</p>
+      </div>
+      <div class="concept-grid" id="concept-grid" aria-live="polite"></div>
+      <div class="empty-state" id="empty-state" hidden>
+        <h3>Aucun concept exact dans le maillage initial.</h3>
+        <p>Ce résultat est valide : le corpus public est encore minimal. Vous pouvez explorer un domaine existant ou proposer une nouvelle relation sur GitHub.</p>
+      </div>
+    </section>
+
+    <section class="content-shell" id="mesh">
+      <div class="section-heading">
+        <p class="eyebrow">Connaissance relationnelle</p>
+        <h2>Du concept au domaine — et retour.</h2>
+        <p>Chaque ressource conserve sa provenance. Une relation dessinée dans le maillage reste une relation qualifiée : elle ne devient pas une preuve par visualisation.</p>
+      </div>
+      <div class="mesh-strip" aria-label="Boucle de connaissance">
+        <span>RESSOURCE</span><b>→</b><span>CONCEPT</span><b>→</b><span>RELATION</span><b>→</b><span>DOMAINE</span><b>↔</b><span>APPRENTISSAGE</span>
+      </div>
+      <div class="resource-grid" id="resource-grid"></div>
+    </section>
+
+    <section class="content-shell two-column">
+      <article class="glass-panel manifesto">
+        <p class="eyebrow">Autonomie</p>
+        <h2>La plateforme propose.<br>L’utilisateur décide.</h2>
+        <p>Pas d’autoplay forcé, pas d’urgence artificielle, pas de contribution sollicitée comme objectif produit. Apprendre peut mener à explorer un module. Explorer peut donner envie d’apprendre un nouveau concept. Contribuer reste une possibilité.</p>
+        <div class="code-locks">
+          <code>LEARNING_SUPPORT != BEHAVIORAL_INFLUENCE</code>
+          <code>RELATION != CAUSATION</code>
+          <code>MODEL != REALITY</code>
+        </div>
+      </article>
+
+      <article class="glass-panel contribute-card" id="contribute">
+        <p class="eyebrow">Commun public</p>
+        <h2>Un domaine manque ?</h2>
+        <p>Une question d’apprentissage peut devenir une exploration, puis éventuellement un module Muze-X. Humains et IA peuvent proposer sources, concepts, relations, corrections ou interfaces dans le même historique Git.</p>
+        <div class="cta-row">
+          <a class="button primary" href="https://github.com/Muse-IRS/muze-x-open-learning-commons/issues">Voir les issues ↗</a>
+          <a class="button secondary" href="https://github.com/Muse-IRS/muze-x-open-learning-commons/blob/main/CONTRIBUTING.md">Contribuer ↗</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="content-shell bridge">
+      <div class="bridge-copy">
+        <p class="eyebrow">Pont multi-domaine</p>
+        <h2>Open Learning Commons ↔ Muze-X Lab</h2>
+        <p>Le commun organise la compréhension et les ressources. Muze-X Lab accueille les explorations publiques par domaine. Le passage entre les deux peut transporter un contexte conceptuel public, jamais un profil personnel requis.</p>
+      </div>
+      <a class="orb-link" href="https://muse-irs.github.io/muze-x-lab-collaborative-platform/" aria-label="Ouvrir Muze-X Lab Collaborative Platform">
+        <span>Explorer</span><strong>Muze-X Lab</strong><small>plateforme multi-domaine ↗</small>
+      </a>
+    </section>
+
+    <section class="content-shell privacy-note">
+      <p><strong>Bootstrap sans profil.</strong> Cette version ne crée aucun compte, n’utilise aucun jeton YouTube, ne stocke pas la recherche et n’infère aucun intérêt depuis les mouvements du champ visuel. Les données affichées proviennent du graphe JSON public versionné dans le dépôt.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>Muze-X Open Learning Commons · Exploratoire · Open source</span>
+    <span>Conceptual development: Muze-X × ChatGPT (OpenAI) · collaboration humain/IA ouverte</span>
+  </footer>
+
+  <script src="./assets/swarm.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>
