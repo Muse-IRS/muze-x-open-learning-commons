@@ -41,6 +41,7 @@ jobs:
           test -f public/assets/learning.css
           test -f public/assets/anchor.css
           test -f public/assets/swarm-lab.css
+          test -f public/assets/swarm-lab.js
           test -f public/assets/swarm.js
           test -f public/assets/app.js
           test -f public/assets/brand-logo.svg
@@ -72,6 +73,7 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check public/assets/swarm.js
+          node --check public/assets/swarm-lab.js
           node --check public/assets/app.js
 
       - name: Preserve learning aggregator
@@ -95,6 +97,18 @@ jobs:
           grep -q 'data-field-mode="attract"' public/swarm/index.html
           grep -q 'data-field-speed="2.2"' public/swarm/index.html
           grep -q 'Swarm Field Lab' public/swarm/index.html
+
+      - name: Preserve usable compact Swarm Field Lab controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'id="swarm-controls"' public/swarm/index.html
+          grep -q 'id="swarm-controls-hide"' public/swarm/index.html
+          grep -q 'id="swarm-controls-restore"' public/swarm/index.html
+          grep -q 'swarm-lab.js' public/swarm/index.html
+          grep -q 'max-height:min(36svh,330px)' public/assets/swarm-lab.css
+          grep -q 'controls-hidden' public/assets/swarm-lab.css
+          grep -q 'setHidden' public/assets/swarm-lab.js
 
       - name: Preserve immersive Muze-X portal bridge and bottom anchor
         shell: bash
