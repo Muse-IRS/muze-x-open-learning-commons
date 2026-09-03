@@ -59,6 +59,14 @@ jobs:
           node --check public/assets/swarm.js
           node --check public/assets/app.js
 
+      - name: Preserve immersive Muze-X portal bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'class="orb-link"' public/index.html
+          grep -q 'https://muse-irs.github.io/muze-x-lab-collaborative-platform/' public/index.html
+          grep -q 'PORTAL_ATTRACTOR' docs/MUZE_X_LAB_BRIDGE.md
+
       - name: Enforce public boundary
         shell: bash
         run: |
